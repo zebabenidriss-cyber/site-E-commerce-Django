@@ -13,3 +13,6 @@ def index(request): # cette fonction est appelée lorsque l'utilisateur accède 
     Product_object = paginator.get_page(page) # récupère les objets Product correspondant à la page demandée par l'utilisateur. Cela permet d'afficher les produits de la page demandée.
     return render(request, 'Store/index.html', {'Product_object': Product_object}) # utilise la fonction render pour générer une réponse HTTP en utilisant le template 'store/index.html' et en passant les objets Product récupérés à ce template. Cela permet d'afficher les produits sur la page d'accueil de l'application Store.)
 
+def detail(request, myid): # cette fonction est appelée lorsque l'utilisateur accède à la page de détail d'un produit spécifique. Elle prend en paramètre un objet request et l'identifiant du produit. 
+    product_object = Product.objects.get(id=myid) # récupère l'objet Product correspondant à l'identifiant fourni. Cela permet d'afficher les détails du produit spécifique.
+    return render(request,'Store/detail.html', {'product': product_object}) # utilise la fonction render pour générer une réponse HTTP en utilisant le template 'store/detail.html' et en passant l'objet Product récupéré à ce template. Cela permet d'afficher les détails du produit sur la page de détail de l'application Store.

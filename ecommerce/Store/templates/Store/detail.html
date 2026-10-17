@@ -1,0 +1,25 @@
+{% extends "Store/base.html" %}
+
+{% block content %}
+    <div class = "row">
+        <div class = "col-md-6">
+              <div>
+                    <img src="{{ product.image }}" width="500px" height="500px" alt="" class="img-fluid">
+              </div>
+        </div>
+        <div class="col-md-6">
+            <div class="text-warning display-3">
+                {{product.title}}
+            </div>
+            <div class="text-danger" style ="padding-bottom: 10px; padding-top: 10px; font-size: 20px;">
+                prix:  {{product.price}} FCFA
+            </div>
+            <div style ="padding-bottom: 20px;">
+                {{product.description}}
+            </div>
+            <a href="#"><button class="btn btn-success">Acheter</button></a>
+        </div>
+
+    <div >
+        
+{% endblock %}
