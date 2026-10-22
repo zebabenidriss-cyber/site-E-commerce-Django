@@ -84,23 +84,38 @@
                 AfficherList(panier) ;
        }) ;
 
-        document.getElementById('panier').innerHTML = "panier(" + Object.keys(panier).length + ")";
-        AfficherList(panier) ;
+                // Met à jour le texte du bouton ou de l'élément affichant le nombre d'articles du panier.
+                document.getElementById('panier').innerHTML = "panier(" + Object.keys(panier).length + ")";
 
+                // Affiche immédiatement le contenu actuel du panier dans la fenêtre contextuelle.
+                AfficherList(panier) ;
+
+             // Construit et affiche la liste des produits enregistrés dans le panier.
        function AfficherList(panier){
+                    // Initialise la chaîne HTML qui sera placée dans la fenêtre contextuelle.
           var panierString = " ";
+                    // Ajoute le titre de la fenêtre du panier.
           panierString += "<h5>Voici votre panier</h5>";
+                    // Sert à numéroter les produits affichés dans la liste.
           var index = 1 ;
+                    // Parcourt chaque identifiant de produit enregistré dans le panier.
           for (var item_id in panier){
+                        // Récupère le titre du produit affiché sur la page.
             var productTitle = document.getElementById('aa' + item_id) ;
+                        // Ajoute le numéro, le nom et la quantité du produit à la liste.
             panierString += index + " " ;
             panierString += (productTitle ? productTitle.textContent : "Produit #" + item_id) + " Qte: " + panier[item_id] + "<br>" ;
+                                // Passe au numéro suivant pour le prochain produit.
                 index += 1 ;
           }
 
+                    // Sélectionne l'élément HTML qui contient le panier.
           var panierElement = $('#panier') ;
+                    // Enregistre la liste générée comme contenu de la fenêtre contextuelle.
           panierElement.attr('data-content', panierString) ;
+                    // Supprime l'ancienne fenêtre contextuelle afin d'éviter les doublons.
           panierElement.popover('dispose') ;
+                    // Initialise à nouveau la fenêtre contextuelle avec le contenu actualisé.
           panierElement.popover() ;
        }
 
