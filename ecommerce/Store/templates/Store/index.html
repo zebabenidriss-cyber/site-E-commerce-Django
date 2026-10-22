@@ -23,7 +23,7 @@
         <div class="card">
             <img src="{{ product.image }}" class="card-img-top" alt="{{ product.title }}" style="height: 200px; width: 100%; object-fit: cover; ">
             <div class="card-body">
-               <div class="card-title">{{ product.title }}</div>
+               <div id="aa{{ product.id }}" class="card-title">{{ product.title }}</div>
                <div style="color: orange;" class="card-text">{{ product.price }} FCFA</div>
                <a href="{{ product.id }}" class="btn btn-warning">Voire</a>
                <button type="button" id="{{ product.id }}" class="btn ted btn-success">Ajouter</button>
@@ -81,6 +81,28 @@
                 }
                 console.log(panier) ;
                 localStorage.setItem('panier', JSON.stringify(panier)) ;
+                AfficherList(panier) ;
        }) ;
+
+        document.getElementById('panier').innerHTML = "panier(" + Object.keys(panier).length + ")";
+        AfficherList(panier) ;
+
+       function AfficherList(panier){
+          var panierString = " ";
+          panierString += "<h5>Voici votre panier</h5>";
+          var index = 1 ;
+          for (var item_id in panier){
+            var productTitle = document.getElementById('aa' + item_id) ;
+            panierString += index + " " ;
+            panierString += (productTitle ? productTitle.textContent : "Produit #" + item_id) + " Qte: " + panier[item_id] + "<br>" ;
+                index += 1 ;
+          }
+
+          var panierElement = $('#panier') ;
+          panierElement.attr('data-content', panierString) ;
+          panierElement.popover('dispose') ;
+          panierElement.popover() ;
+       }
+
     </script>
 {% endblock %} 
