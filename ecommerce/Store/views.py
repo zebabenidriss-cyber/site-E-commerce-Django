@@ -16,3 +16,6 @@ def index(request): # cette fonction est appelée lorsque l'utilisateur accède 
 def detail(request, myid): # cette fonction est appelée lorsque l'utilisateur accède à la page de détail d'un produit spécifique. Elle prend en paramètre un objet request et l'identifiant du produit. 
     product_object = Product.objects.get(id=myid) # récupère l'objet Product correspondant à l'identifiant fourni. Cela permet d'afficher les détails du produit spécifique.
     return render(request,'Store/detail.html', {'product': product_object}) # utilise la fonction render pour générer une réponse HTTP en utilisant le template 'store/detail.html' et en passant l'objet Product récupéré à ce template. Cela permet d'afficher les détails du produit sur la page de détail de l'application Store.
+
+def checkout(request): # cette fonction est appelée lorsque l'utilisateur accède à la page de paiement. Elle prend en paramètre un objet request.
+    return render(request, 'Store/checkout.html') ; # utilise la fonction render pour générer une réponse HTTP en utilisant le template 'store/checkout.html'. Cela permet d'afficher la page de paiement de l'application Store.
