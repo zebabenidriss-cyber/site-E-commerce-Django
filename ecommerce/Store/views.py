@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Product
+from .models import Product , commande
 from django.core.paginator import Paginator    
 # Create your views here.
 
@@ -18,4 +18,16 @@ def detail(request, myid): # cette fonction est appelée lorsque l'utilisateur a
     return render(request,'Store/detail.html', {'product': product_object}) # utilise la fonction render pour générer une réponse HTTP en utilisant le template 'store/detail.html' et en passant l'objet Product récupéré à ce template. Cela permet d'afficher les détails du produit sur la page de détail de l'application Store.
 
 def checkout(request): # cette fonction est appelée lorsque l'utilisateur accède à la page de paiement. Elle prend en paramètre un objet request.
-    return render(request, 'Store/checkout.html') ; # utilise la fonction render pour générer une réponse HTTP en utilisant le template 'store/checkout.html'. Cela permet d'afficher la page de paiement de l'application Store.
+    products = list(Product.objects.values('id', 'title', 'price'))
+    if request.method == 'POST':
+        nom = request.POST.get('nom')
+        email = request.POST.get('email')
+        adresse = request.POST.get('adresse')
+        ville = request.POST.get('ville')
+        pays = request.POST.get('pays')
+        zip_code = request.POST.get('zip_code')
+        items = request.POST.get('items')
+        com = commande(items=items, nom=nom, email=email, adresse=adresse, ville=ville, pays=pays, zip_code=zip_code)
+        com.save()  # enregistre la commande dans la base de données.
+        # Vous pouvez maintenant utiliser ces informations pour traiter le paiement ou enregistrer la commande.
+    return render(request, 'Store/checkout.html', {'products': products}) ; # utilise la fonction render pour générer une réponse HTTP en utilisant le template 'store/checkout.html'. Cela permet d'afficher les produits du panier.

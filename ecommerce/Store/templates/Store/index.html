@@ -81,6 +81,7 @@
                 }
                 console.log(panier) ;
                 localStorage.setItem('panier', JSON.stringify(panier)) ;
+                document.getElementById('panier').innerHTML = "panier(" + Object.keys(panier).length + ")";
                 AfficherList(panier) ;
        }) ;
 
@@ -109,7 +110,7 @@
                 index += 1 ;
           }
 
-          panierString += "<a href='/checkout' class='btn btn-primary'>Commander</a><br>" ;
+          panierString += "<a href='{% url 'checkout' %}' class='btn btn-primary'>Commander</a><br>" ;
 
                     // Sélectionne l'élément HTML qui contient le panier.
           var panierElement = $('#panier') ;

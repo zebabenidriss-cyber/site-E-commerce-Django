@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import category, Product # Import des modèles
+from .models import category, Product , commande # Import des modèles
 
 #python manage.py createsuperuser : creation d'un super utilisateur pour accéder à l'interface d'administration
 #python manage.py runserver : pour lancer le serveur de développement et accéder à l'interface d'administration via l'URL /admin
@@ -21,4 +21,5 @@ class productAdmin(admin.ModelAdmin):
 
 admin.site.register(category, CategoryAdmin) # Register le modèle Category dans l'interface d'administration
 admin.site.register(Product, productAdmin) # Register le modèle Product dans l'interface d'administration
+admin.site.register(commande) # Register le modèle commande dans l'interface d'administration
 
