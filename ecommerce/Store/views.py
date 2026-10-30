@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 from .models import Product , commande
 from django.core.paginator import Paginator    
@@ -26,7 +28,20 @@ def checkout(request): # cette fonction est appelée lorsque l'utilisateur accè
         ville = request.POST.get('ville')
         pays = request.POST.get('pays')
         zip_code = request.POST.get('zip_code')
-        items = request.POST.get('items')
+        submitted_items = json.loads(request.POST.get('items', '{}'))
+        product_ids = [int(product_id) for product_id in submitted_items]
+        products_by_id = Product.objects.in_bulk(product_ids)
+        order_items = []
+        for product_id, quantity in submitted_items.items():
+            product_id = int(product_id)
+            quantity = int(quantity)
+            if product_id in products_by_id and quantity > 0:
+                order_items.append({
+                    'id': product_id,
+                    'name': products_by_id[product_id].title,
+                    'quantity': quantity,
+                })
+        items = json.dumps(order_items, ensure_ascii=False)
         com = commande(items=items, nom=nom, email=email, adresse=adresse, ville=ville, pays=pays, zip_code=zip_code)
         com.save()  # enregistre la commande dans la base de données.
         # Vous pouvez maintenant utiliser ces informations pour traiter le paiement ou enregistrer la commande.
